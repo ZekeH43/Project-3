@@ -71,7 +71,12 @@ def cast_vote(token_id, candidate_index):
     signed_tx = w3.eth.account.signTransaction(tx, private_key)
     tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
     tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-    return tx_receipt
+
+    # Extracting token information from the transaction receipt
+    token_event = tx_receipt['logs'][0]
+    token_id = w3.toInt(hexstr=token_event['data'])
+
+    return token_id
 
 def view_results():
     results = contract.functions.viewResults().call()
@@ -85,3 +90,43 @@ def view_results():
             st.success("Vote cast successfully!")
         except Exception as e:
             st.error(f"An error occurred: {e}")
+
+
+candidate_database = {
+    "Alice": [
+        "Alice",
+        "With a passion for both the great outdoors and cutting-edge technology, Alice is an avid hiker who finds solace in nature while leveraging her expertise in crafting computer chips.",
+        "Images/Alice.jpg",
+    ],
+    "Bob": [
+        "Bob",
+        " Balancing his love for culinary adventures with a rewarding career in computer chip manufacturing, Bob is a dedicated foodie constantly seeking new flavors and experiences both in the kitchen and the lab.",
+        "Images/Bob.jpg",
+    ],
+    "Charlie": [
+        "Charlie",
+        "An enthusiast of melodic tunes and computer chip design alike, Charlie immerses himself in music and guitar-playing while pursuing his profession in the captivating world of chip fabrication.",
+        "Images/Charlie.jpg",
+    ],
+    "Diana": [
+        "Diana",
+        "Combining her love for literature with a successful career in computer chip engineering, Diana is a passionate reader who explores diverse literary worlds alongside her endeavors in cutting-edge technology.",
+        "Images/Diana.jpg",
+    ],
+}
+
+
+# A list of the candidates first names
+people = ["Alice", "Bob", "Charlie", "Diana"]
+
+
+def get_candidates():
+    """Display the database of candidate information."""
+    db_list = list(candidate_database.values())
+
+    for number in range(len(people)):
+        # Correct index for image
+        st.image(db_list[number][2], width=200)
+        st.write("Name: ", db_list[number][0])
+        st.write("Bio: ", db_list[number][1])
+        st.text(" \n")
