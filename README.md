@@ -1,5 +1,153 @@
 # Tech Company Board Member Voting System
 
+In this project, you’ll develop a decentralized application (dApp) for a tech company's board member voting system using Solidity and Streamlit.
+
+## Instructions
+The instructions for this project are divided into the following steps:
+
+### Step 1: Create the Smart Contract in Solidity
+
+The smart contract VotingSystem is written in Solidity and includes the following key components:
+
+##### 1. Solidity Version and OpenZeppelin Import:
+Specifies Solidity version ^0.5.5.
+Imports ERC721Full from OpenZeppelin, a standard for non-fungible tokens (NFTs), to represent voting tokens.
+Contract Declaration:
+
+The VotingSystem contract inherits from ERC721Full, indicating each voter will have a unique token.
+Voter Structure:
+
+Defines a Voter struct to store a voter's name, phone number, the last four digits of their SSN, and employee ID.
+State Variables:
+
+voters: A mapping from token IDs to Voter structs, storing voter information.
+registeredEmployeeIds: Tracks whether an employee ID has been registered to prevent duplicate registrations.
+votes: Records the number of votes each candidate has received.
+totalTokens: A count of total voting tokens issued.
+candidates: An array of candidate names available for voting.
+Constructor:
+
+Initializes the ERC721 token with a name and symbol.
+register_voter Function:
+
+Registers a new voter and mints a new voting token.
+Ensures no duplicate registrations for each employee ID.
+vote Function:
+
+Allows token owners to vote for a candidate.
+Requires the caller to be the owner of the token.
+viewResults Function:
+
+A view function that returns the current voting results for each candidate.
+Step 2: Deploy the Contract
+Deploy the VotingSystem contract using the Remix IDE, MetaMask, and your Ethereum testnet of choice.
+Copy the SAMPLE.env file to a file named .env, and update it with the address of your deployed contract.
+Copy the contract's ABI file into a JSON file for later use.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Tech Company Board Member Voting System
+
 
 ## Overview
 
