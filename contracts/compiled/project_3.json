@@ -260,32 +260,6 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"name": "_phoneNumber",
-				"type": "string"
-			},
-			{
-				"name": "_ssnLast4",
-				"type": "uint256"
-			},
-			{
-				"name": "_employeeId",
-				"type": "uint256"
-			}
-		],
-		"name": "registerVoter",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [],
 		"name": "totalTokens",
@@ -424,7 +398,7 @@
 			},
 			{
 				"name": "phoneNumber",
-				"type": "string"
+				"type": "uint256"
 			},
 			{
 				"name": "ssnLast4",
@@ -460,6 +434,32 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_phoneNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "_ssnLast4",
+				"type": "uint256"
+			},
+			{
+				"name": "_employeeId",
+				"type": "uint256"
+			}
+		],
+		"name": "register_voter",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

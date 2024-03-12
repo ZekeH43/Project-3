@@ -13,7 +13,7 @@ load_dotenv()
 w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 
 # Load the contract
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_contract():
     # Load Contract ABI
     with open(Path('./contracts/compiled/project_3.json')) as f:
@@ -28,68 +28,69 @@ contract = load_contract()
 # Load your employee dataset
 employees = pd.read_csv('fake_employee.csv')
 
-def verify_employee(name, phone, ssn_last4, employee_id):
+# converting from float to int
+employees['employee_id'] = employees['employee_id'].astype(object)
+
+# converting from float to int
+employees['Last_4_SSN'] = employees['Last_4_SSN'].astype(object)
+
+def verify_employee(name, phoneNumber, ssnLast4, employeeId):
     return any(
         (employees['name'] == name) &
-        (employees['phone_number'] == phone) &
-        (employees['Last_4_SSN'] == ssn_last4) &
-        (employees['employee_id'] == employee_id)
+        (employees['phone_number'] == phoneNumber) &
+        (employees['Last_4_SSN'] == ssnLast4) &
+        (employees['employee_id'] == employeeId)
     )
 
-def register_voter(name, phone, ssn_last4, employee_id):
-    if verify_employee(name, phone, ssn_last4, employee_id):
+def register_voter(name, phoneNumber, ssnLast4, employeeId):
+    if verify_employee(name, phoneNumber, ssnLast4, employeeId):
         # Create a transaction to register the voter
-        tx = contract.functions.registerVoter(name, phone, ssn_last4, employee_id).buildTransaction({
-            'from': w3.eth.accounts[0],  # The account that sends the transaction
-            'nonce': w3.eth.getTransactionCount(w3.eth.accounts[0]),
+        tx = contract.functions.register_voter(name, phoneNumber, ssnLast4, employeeId).transact({
+            'from': w3.eth.accounts[0],
+            #'nonce': w3.eth.getTransactionCount(w3.eth.accounts[0]),
             'gas': 1000000 
         })
 
-        # Sign the transaction using the private key
-        private_key = os.getenv("PRIVATE_KEY")
-        signed_tx = w3.eth.account.signTransaction(tx, private_key)
+        # Sign the transaction
+        #signed_tx = w3.eth.account.signTransaction(tx)
 
         # Send the transaction
-        tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+        #tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
 
         # Wait for the transaction receipt
-        tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+        #tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
 
         # Assume the token ID is the total number of tokens issued so far
-        token_id = contract.functions.totalTokens().call() - 1
+        tokenId = contract.functions.totalTokens().call() - 1
 
-        return token_id
+        return tokenId
     else:
         return "Employee verification failed."
 
-def cast_vote(token_id, candidate_index):
-    private_key = os.getenv("PRIVATE_KEY")
-    tx = contract.functions.vote(token_id, candidate_index).buildTransaction({
+def cast_vote(tokenId, candidate_index):
+    tx = contract.functions.vote(tokenId, candidate_index).buildTransaction({
         'from': w3.eth.accounts[0],
         'nonce': w3.eth.getTransactionCount(w3.eth.accounts[0])
     })
-    signed_tx = w3.eth.account.signTransaction(tx, private_key)
-    tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-    tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    #signed_tx = w3.eth.account.signTransaction(tx)
+    #tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+    #tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+    #token_event = tx_receipt['logs'][0]
+    #tokenId = w3.toInt(hexstr=token_event['data'])
 
-    # Extracting token information from the transaction receipt
-    token_event = tx_receipt['logs'][0]
-    token_id = w3.toInt(hexstr=token_event['data'])
-
-    return token_id
+    #candidate_index = st.selectbox("Choose a candidate", [0, 1, 2, 3], format_func=lambda x: ["Alice", "Bob", "Charlie", "Diana"][x])
+    #vote_submitted = st.form_submit_button("Vote")
+    #if vote_submitted:
+        #try:
+            #voting_response = cast_vote(tokenId, candidate_index)
+            #st.success("Vote cast successfully!")
+        #except Exception as e:
+            #st.error(f"An error occurred: {e}")
 
 def view_results():
-    results = contract.functions.viewResults().call()
-    return results
-
-    candidate_index = st.selectbox("Choose a candidate", [0, 1, 2, 3], format_func=lambda x: ["Alice", "Bob", "Charlie", "Diana"][x])
-    vote_submitted = st.form_submit_button("Vote")
-    if vote_submitted:
-        try:
-            voting_response = cast_vote(token_id, candidate_index)
-            st.success("Vote cast successfully!")
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
+    return contract.functions.viewResults().call()
+    #results = contract.functions.viewResults().call()
+    #return results
 
 
 candidate_database = {
