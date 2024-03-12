@@ -6,7 +6,7 @@
 
 
 ## Solidity Contract Implementation (Project_33.sol)
--The smart contract, written in Solidity, facilitates a secure and transparent voting process for board member selection. Key components include:
+### The smart contract, written in Solidity, facilitates a secure and transparent voting process for board member selection. Key components include:
 
 -ERC721 Token: Inherits from ERC721Full, an OpenZeppelin implementation of the ERC721 standard, creating unique tokens for each voter.
 
