@@ -1,12 +1,11 @@
-##Tech Company Board Member Voting System
+### Tech Company Board Member Voting System
 
-
-#Overview
+## Overview
 
 -We are creating a voting system for a tech company to cast votes on who they want to be added as a board member. This system is designed to ensure a transparent and secure voting process using blockchain technology and a user-friendly interface.
 
 
-##Solidity Contract Implementation (Project_33.sol)
+## Solidity Contract Implementation (Project_33.sol)
 -The smart contract, written in Solidity, facilitates a secure and transparent voting process for board member selection. Key components include:
 
 -ERC721 Token: Inherits from ERC721Full, an OpenZeppelin implementation of the ERC721 standard, creating unique tokens for each voter.
