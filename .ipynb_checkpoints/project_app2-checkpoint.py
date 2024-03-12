@@ -6,6 +6,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
+from web3.exceptions import ContractLogicError
 
 load_dotenv()
 
@@ -42,57 +43,38 @@ def verify_employee(name, phoneNumber, ssnLast4, employeeId):
         (employees['employee_id'] == employeeId)
     )
 
+
+# Create a transaction to register the voter
 def register_voter(name, phoneNumber, ssnLast4, employeeId):
     if verify_employee(name, phoneNumber, ssnLast4, employeeId):
-        # Create a transaction to register the voter
-        tx = contract.functions.register_voter(name, phoneNumber, ssnLast4, employeeId).transact({
-            'from': w3.eth.accounts[0],
-            #'nonce': w3.eth.getTransactionCount(w3.eth.accounts[0]),
-            'gas': 1000000 
-        })
-
-        # Sign the transaction
-        #signed_tx = w3.eth.account.signTransaction(tx)
-
-        # Send the transaction
-        #tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-
-        # Wait for the transaction receipt
-        #tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-
-        # Assume the token ID is the total number of tokens issued so far
-        tokenId = contract.functions.totalTokens().call() - 1
-
-        return tokenId
+        try:
+            tx = contract.functions.register_voter(name, phoneNumber, ssnLast4, employeeId).transact({
+                'from': w3.eth.accounts[0],
+                'gas': 1000000 
+            })
+            tokenId = contract.functions.totalTokens().call() - 1
+            return tokenId
+        except ContractLogicError as e:
+            # This catches the revert from the Solidity contract
+            return f"Registration failed: {e}"
     else:
         return "Employee verification failed."
 
+
+# Create a transaction to cast a vote
 def cast_vote(tokenId, candidate_index):
     tx = contract.functions.vote(tokenId, candidate_index).buildTransaction({
         'from': w3.eth.accounts[0],
         'nonce': w3.eth.getTransactionCount(w3.eth.accounts[0])
     })
-    #signed_tx = w3.eth.account.signTransaction(tx)
-    #tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-    #tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-    #token_event = tx_receipt['logs'][0]
-    #tokenId = w3.toInt(hexstr=token_event['data'])
 
-    #candidate_index = st.selectbox("Choose a candidate", [0, 1, 2, 3], format_func=lambda x: ["Alice", "Bob", "Charlie", "Diana"][x])
-    #vote_submitted = st.form_submit_button("Vote")
-    #if vote_submitted:
-        #try:
-            #voting_response = cast_vote(tokenId, candidate_index)
-            #st.success("Vote cast successfully!")
-        #except Exception as e:
-            #st.error(f"An error occurred: {e}")
-
+# Create a function to visulize reults
 def view_results():
-    return contract.functions.viewResults().call()
-    #results = contract.functions.viewResults().call()
-    #return results
+    results = contract.functions.viewResults().call()
+    return results
 
 
+# Create a database for the candidates 
 candidate_database = {
     "Alice": [
         "Alice",
@@ -121,12 +103,12 @@ candidate_database = {
 people = ["Alice", "Bob", "Charlie", "Diana"]
 
 
+# Create a function that will display the candidates 
 def get_candidates():
     """Display the database of candidate information."""
     db_list = list(candidate_database.values())
 
     for number in range(len(people)):
-        # Correct index for image
         st.image(db_list[number][2], width=200)
         st.write("Name: ", db_list[number][0])
         st.write("Bio: ", db_list[number][1])

@@ -1,8 +1,11 @@
+# Load Imports
 import streamlit as st
 from project_app2 import register_voter, cast_vote, view_results, get_candidates
 import time
 
+#Title of website 
 st.title("Company Board Member Voting System")
+
 
 # Timer and Results Viewing (Sidebar)
 if st.sidebar.button("Start Timer"):
@@ -18,13 +21,16 @@ if end_time:
     else:
         st.sidebar.write("Voting ended")
 
+
 if st.sidebar.button("View Current Results"):
     results = view_results()
     for i, candidate in enumerate(["Alice", "Bob", "Charlie", "Diana"]):
         st.write(f"{candidate}: {results[i]} votes")
 
+
 # Candidate Information
 get_candidates()
+
 
 # Voter Registration Form
 st.header("Voter Registration")
@@ -42,6 +48,8 @@ with st.form("registration_form"):
         except Exception as e:
             st.error(f"An error occurred: {e}")
 
+
+# Casting Vote Form
 st.header("Cast Your Vote")
 with st.form("voting_form"):
     tokenId = st.number_input("Token ID",value=0)
