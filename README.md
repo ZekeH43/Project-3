@@ -1,4 +1,4 @@
-### Tech Company Board Member Voting System
+# Tech Company Board Member Voting System
 
 ## Overview
 
