@@ -12,37 +12,56 @@ The smart contract VotingSystem is written in Solidity and includes the followin
 ##### 1. Solidity Version and OpenZeppelin Import:
 Specifies Solidity version ^0.5.5.
 Imports ERC721Full from OpenZeppelin, a standard for non-fungible tokens (NFTs), to represent voting tokens.
-Contract Declaration:
 
+##### 2.Contract Declaration:
 The VotingSystem contract inherits from ERC721Full, indicating each voter will have a unique token.
-Voter Structure:
 
+##### 3.Voter Structure:
 Defines a Voter struct to store a voter's name, phone number, the last four digits of their SSN, and employee ID.
-State Variables:
 
-voters: A mapping from token IDs to Voter structs, storing voter information.
-registeredEmployeeIds: Tracks whether an employee ID has been registered to prevent duplicate registrations.
-votes: Records the number of votes each candidate has received.
-totalTokens: A count of total voting tokens issued.
-candidates: An array of candidate names available for voting.
-Constructor:
+##### 4.State Variables:
+-voters: A mapping from token IDs to Voter structs, storing voter information.
 
+-registeredEmployeeIds: Tracks whether an employee ID has been registered to prevent duplicate registrations.
+
+-votes: Records the number of votes each candidate has received.
+
+-totalTokens: A count of total voting tokens issued.
+
+-candidates: An array of candidate names available for voting.
+
+##### 5.Constructor:
 Initializes the ERC721 token with a name and symbol.
-register_voter Function:
 
-Registers a new voter and mints a new voting token.
-Ensures no duplicate registrations for each employee ID.
-vote Function:
+##### 6.register_voter Function:
 
-Allows token owners to vote for a candidate.
-Requires the caller to be the owner of the token.
-viewResults Function:
+-Registers a new voter and mints a new voting token.
 
-A view function that returns the current voting results for each candidate.
-Step 2: Deploy the Contract
-Deploy the VotingSystem contract using the Remix IDE, MetaMask, and your Ethereum testnet of choice.
-Copy the SAMPLE.env file to a file named .env, and update it with the address of your deployed contract.
-Copy the contract's ABI file into a JSON file for later use.
+-Ensures no duplicate registrations for each employee ID.
+
+##### 7.vote Function:
+
+-Allows token owners to vote for a candidate.
+
+-Requires the caller to be the owner of the token.
+
+##### 8.viewResults Function:
+
+-A view function that returns the current voting results for each candidate.
+
+### Step 2: Deploy the Contract
+
+##### 1.Compile the contract
+
+-Copy the ABI and paste it into a notepad and save this file a a json file.
+
+##### 2. Deploy the VotingSystem contract using the Remix IDE, MetaMask
+
+-Copy the deployed contract address and save it to a .env file.
+
+
+
+
 
 
 
