@@ -70,13 +70,9 @@ The frontend of our voting system is an interactive web application developed us
   -Candidate Information Display: Functionality to retrieve and show information about the candidates. (The specific implementation details of get_candidates() are not provided, but it presumably fetches and displays candidate details.)
 
   -Voter Registration Form:
-  
-    -A form where users can input their name, phone number, last four digits of SSN, and employee ID for voter registration.
-    
-    -On submission, it calls the register_voter function from project_app2.py and displays the registration status.
+    A form where users can input their name, phone number, last four digits of SSN, and employee ID for voter registration.
+    On submission, it calls the register_voter function from project_app2.py and displays the registration status.
     
   -Casting Vote Form:
-  
-    -A form for registered voters to cast their vote. Voters enter their token ID and select a candidate from a dropdown list.
-    
-    -On submission, it calls the cast_vote function from project_app2.py and displays a success or error message based on the voting outcome.
+    A form for registered voters to cast their vote. Voters enter their token ID and select a candidate from a dropdown list.
+    On submission, it calls the cast_vote function from project_app2.py and displays a success or error message based on the voting outcome.
