@@ -62,9 +62,7 @@ The frontend of our voting system is an interactive web application developed us
   -Website Title: Displays the title "Company Board Member Voting System" at the top of the page.
 
   -Sidebar for Timer and Results Viewing:
-  
     Start Timer: A button to start a voting session timer, lasting for one hour. It displays the remaining time in the sidebar.
-    
     View Current Results: A button to view the current voting results. When clicked, it displays the vote count for each candidate.
     
   -Candidate Information Display: Functionality to retrieve and show information about the candidates. (The specific implementation details of get_candidates() are not provided, but it presumably fetches and displays candidate details.)
