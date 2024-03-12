@@ -1,22 +1,22 @@
-Tech Company Board Member Voting System
-Overview
-We are creating a voting system for a tech company to cast votes on who they want to be added as a board member. This system is designed to ensure a transparent and secure voting process using blockchain technology and a user-friendly interface.
+##Tech Company Board Member Voting System
+#Overview
+-We are creating a voting system for a tech company to cast votes on who they want to be added as a board member. This system is designed to ensure a transparent and secure voting process using blockchain technology and a user-friendly interface.
 
-Solidity Contract Implementation (Project_33.sol)
-The smart contract, written in Solidity, facilitates a secure and transparent voting process for board member selection. Key components include:
+##Solidity Contract Implementation (Project_33.sol)
+-The smart contract, written in Solidity, facilitates a secure and transparent voting process for board member selection. Key components include:
 
-ERC721 Token: Inherits from ERC721Full, an OpenZeppelin implementation of the ERC721 standard, creating unique tokens for each voter.
-Voter Structure: A Voter struct stores information such as name, phone number, last four digits of SSN, and employee ID.
-Mappings:
-voters: Maps token IDs to Voter objects.
-registeredEmployeeIds: Tracks registered employee IDs to prevent duplicate registrations.
-votes: Maps candidate indices to their vote counts.
-Candidates: An array of candidate names for the election.
-register_voter Function: Registers voters and mints new ERC721 tokens, ensuring no duplicate registrations.
-vote Function: Allows token owners to vote for candidates.
-viewResults Function: A public view function that returns the total votes each candidate has received.
-Contract Compilation and ABI Generation
-After completing the Solidity contract, we compiled it and extracted the ABI (Application Binary Interface). The ABI was saved as a JSON file for interaction with the contract from our Python application.
+-ERC721 Token: Inherits from ERC721Full, an OpenZeppelin implementation of the ERC721 standard, creating unique tokens for each voter.
+-Voter Structure: A Voter struct stores information such as name, phone number, last four digits of SSN, and employee ID.
+-Mappings:
+--voters: Maps token IDs to Voter objects.
+--registeredEmployeeIds: Tracks registered employee IDs to prevent duplicate registrations.
+---votes: Maps candidate indices to their vote counts.
+-Candidates: An array of candidate names for the election.
+--register_voter Function: Registers voters and mints new ERC721 tokens, ensuring no duplicate registrations.
+--vote Function: Allows token owners to vote for candidates.
+--viewResults Function: A public view function that returns the total votes each candidate has received.
+-Contract Compilation and ABI Generation
+-After completing the Solidity contract, we compiled it and extracted the ABI (Application Binary Interface). The ABI was saved as a JSON file for interaction with the contract from our Python application.
 
 MetaMask Integration and Contract Deployment
 We connected our project to MetaMask and deployed the contract to the Ethereum network. The contract address and Web3 provider URI were stored in an .env file for secure interactions.
