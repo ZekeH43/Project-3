@@ -2,7 +2,7 @@
 
 ## Overview
 
--We are creating a voting system for a tech company to cast votes on who they want to be added as a board member. This system is designed to ensure a transparent and secure voting process using blockchain technology and a user-friendly interface.
+We are creating a voting system for a tech company to cast votes on who they want to be added as a board member. This system is designed to ensure a transparent and secure voting process using blockchain technology and a user-friendly interface.
 
 ## Instructions
 The instructions for this project are divided into the following steps:
