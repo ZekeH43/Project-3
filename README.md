@@ -62,7 +62,7 @@ Initializes the ERC721 token with a name and symbol.
 -Copy the deployed contract address and save it to a .env file.
 
 
-### Backend Functions Implementation (project_app2.py)
+### Step 3: Backend Functions (project_app2.py)
 
 ##### Imports and Setup
 
@@ -125,7 +125,7 @@ Initializes the ERC721 token with a name and symbol.
 
 
 
-## Frontend Development with Streamlit (Votingapp.py)
+## Step 4: Frontend Development with Streamlit (Votingapp.py)
 
 The Votingapp.py script is responsible for the frontend of the web application, using Streamlit to create an interactive interface for the voting system. Here's a breakdown of its key components:
 
