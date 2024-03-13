@@ -7,6 +7,8 @@
 ## Instructions
 The instructions for this project are divided into the following steps:
 
+
+
 ### Step 1: Create the Smart Contract in Solidity
 
 The smart contract VotingSystem is written in Solidity and includes the following key components:
@@ -60,6 +62,7 @@ Initializes the ERC721 token with a name and symbol.
 ##### 2. Deploy the VotingSystem contract using the Remix IDE, MetaMask
 
 -Copy the deployed contract address and save it to a .env file.
+
 
 
 ### Step 3: Backend Functions (project_app2.py)
