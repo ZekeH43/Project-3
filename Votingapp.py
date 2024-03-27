@@ -1,4 +1,3 @@
-# Import required modules and functions
 #Import necessary modules and functions from project_app2
 import streamlit as st
 from project_app2 import register_voter, cast_vote, view_results, get_candidates
