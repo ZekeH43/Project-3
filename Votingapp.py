@@ -1,13 +1,17 @@
-# Load Imports
+# Import required modules and functions
+#Import necessary modules and functions from project_app2
 import streamlit as st
 from project_app2 import register_voter, cast_vote, view_results, get_candidates
 import time
 
-#Title of website 
+# Set up the web interface using Streamlit
+#Create the main title for the voting system web page
 st.title("Company Board Member Voting System")
 
 
 # Timer and Results Viewing (Sidebar)
+#If "Start Timer" button is clicked in sidebar:
+    #Start a countdown timer for 60 minutes
 if st.sidebar.button("Start Timer"):
     end_time = time.time() + 60 * 60 
     st.session_state['end_time'] = end_time
@@ -28,11 +32,13 @@ if st.sidebar.button("View Current Results"):
         st.write(f"{candidate}: {results[i]} votes")
 
 
-# Candidate Information
+# Display Candidate Information
+#Retrieve and display information about the candidates
 get_candidates()
 
 
 # Voter Registration Form
+#Create a form for voter registration with fields for name, phone number, SSN, and employee ID
 st.header("Voter Registration")
 with st.form("registration_form"):
     name = st.text_input("Name")
@@ -40,6 +46,9 @@ with st.form("registration_form"):
     ssnLast4 = st.number_input("Last 4 digits of SSN",value=0)
     employeeId = st.number_input("Employee ID",value=0)
     submitted = st.form_submit_button("Register")
+    #If the registration form is submitted:
+    #Attempt to register the voter
+    #Display success or error message based on the registration attempt
     if submitted:
         try:
             registration_response = register_voter(name, phoneNumber, ssnLast4, employeeId)
@@ -50,6 +59,7 @@ with st.form("registration_form"):
 
 
 # Casting Vote Form
+#Create a form for casting votes with fields for token ID and candidate selection
 st.header("Cast Your Vote")
 with st.form("voting_form"):
     tokenId = st.number_input("Token ID",value=0)
@@ -62,8 +72,6 @@ with st.form("voting_form"):
             st.success("Vote cast successfully!")
         except Exception as e:
             st.error(f"An error occurred: {e}")
-
-
 
 
 

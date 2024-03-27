@@ -1,4 +1,5 @@
-# Load Imports
+# Import required modules and set up environment
+#Import necessary modules and load environment variables
 import os
 import json
 from web3 import Web3
@@ -10,16 +11,18 @@ from web3.exceptions import ContractLogicError
 
 load_dotenv()
 
-# Define and connect a new Web3 provider
+
+# Establish a connection to the blockchain using Web3
+#Connect to the Web3 provider using the provided URI
 w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 
-# Load the contract
+# Load and set up the smart contract
 @st.cache_resource
 def load_contract():
     # Load Contract ABI
     with open(Path('./contracts/compiled/project_3.json')) as f:
         project_abi = json.load(f)
-
+    #Connect to the deployed contract on the blockchain
     contract_address = os.getenv("SMART_CONTRACT_ADDRESS")
     contract = w3.eth.contract(address=contract_address, abi=project_abi)
     return contract
@@ -29,12 +32,16 @@ contract = load_contract()
 # Load your employee dataset
 employees = pd.read_csv('fake_employee.csv')
 
+
 # converting from float to int
 employees['employee_id'] = employees['employee_id'].astype(object)
+
 
 # converting from float to int
 employees['Last_4_SSN'] = employees['Last_4_SSN'].astype(object)
 
+
+# Define a function to verify if a person is an employee
 def verify_employee(name, phoneNumber, ssnLast4, employeeId):
     return any(
         (employees['name'] == name) &
@@ -44,10 +51,12 @@ def verify_employee(name, phoneNumber, ssnLast4, employeeId):
     )
 
 
-# Create a transaction to register the voter
+# Voter Registration Function
 def register_voter(name, phoneNumber, ssnLast4, employeeId):
+    #Verify if the person is an employee
     if verify_employee(name, phoneNumber, ssnLast4, employeeId):
         try:
+            # Create a transaction to register the voter
             tx = contract.functions.register_voter(name, phoneNumber, ssnLast4, employeeId).transact({
                 'from': w3.eth.accounts[0],
                 'gas': 1000000 
@@ -61,20 +70,23 @@ def register_voter(name, phoneNumber, ssnLast4, employeeId):
         return "Employee verification failed."
 
 
-# Create a transaction to cast a vote
+# Voting Function
 def cast_vote(tokenId, candidate_index):
-    tx = contract.functions.vote(tokenId, candidate_index).buildTransaction({
+    #Create a blockchain transaction to record the vote
+    tx = contract.functions.vote(tokenId, candidate_index).transact({
         'from': w3.eth.accounts[0],
         'nonce': w3.eth.getTransactionCount(w3.eth.accounts[0])
     })
 
 # Create a function to visulize reults
 def view_results():
+    #Define a function to retrieve voting results from the blockchain
     results = contract.functions.viewResults().call()
     return results
 
 
-# Create a database for the candidates 
+ 
+#Create a dictionary containing detailed information about each candidate
 candidate_database = {
     "Alice": [
         "Alice",
