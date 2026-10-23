@@ -1,0 +1,2 @@
+# Minimal dependencies for the offline Streamlit demo.
+streamlit==1.66.1

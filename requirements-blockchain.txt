@@ -1,0 +1,4 @@
+-r requirements.txt
+# Optional adapter for the original local-chain prototype.
+web3==7.16.0
+python-dotenv==1.2.4
